@@ -96,45 +96,45 @@ blink2:
 rjmp reset
 
 reset:		
-		ldi	r18, LOW(RAMEND)	
+		ldi	r18, LOW(RAMEND) ;Αρχικοποίηση stack pointer	
 		out	spl, r18
 		ldi	r18, HIGH(RAMEND)
 		out	sph, r18
 
 		ldi r24, (1 << PC7) | (1 << PC6) | (1 << PC5) | (1 << PC4) 
-		out DDRC, r24 
+		out DDRC, r24	;Αρχικοποίηση 4ων MSB της PORTB ως έξοδο και 4ων LSB της PORTB ως είσοδο
 		ser r24
-		out DDRD, r24
-		out DDRB, r24 
+		out DDRD, r24	;Αρχικοποίηση PORTB ως έξοδο
+		out DDRB, r24 	;Αρχικοποίηση PORTD ως έξοδο
 		
 digit_1:
-		ldi r21, 0x00
-		rcall scan_keypad_rising_edge_sim
-		rcall keypad_to_ascii_sim
+		ldi r21, 0x00	;Αρχικοποίηση flag (r21) ορθότητας 1ου ψηφίου
+		rcall scan_keypad_rising_edge_sim ;Διάβασμα πληκτρολογίου
+		rcall keypad_to_ascii_sim 	;Μετατροπή σε ψηφίο ASCII
 		cpi r24, 0x00
-		breq digit_1
-		cpi r24, '4'
+		breq digit_1	;Διάβασμα πληκτρολογίου μέχρι να πατηθεί το 1ο πλήκτρο
+		cpi r24, '4'	;Έλεγχος 1ου ψηφίου
 		breq digit_2
-		ldi r21, 0x01
+		ldi r21, 0x01	;Εάν είναι λάθος θέτουμε το flag σε 1
 
 digit_2:
-		rcall scan_keypad_rising_edge_sim
-		rcall keypad_to_ascii_sim
+		rcall scan_keypad_rising_edge_sim ;Διάβασμα πληκτρολογίου
+		rcall keypad_to_ascii_sim 	;Μετατροπή σε ψηφίο ASCII
 		cpi r24, 0x00
-		breq digit_2
-		cpi r21, 0x01
-		breq wrong_pass
-		cpi r24, '8'
-		brne wrong_pass
+		breq digit_2	;Διάβασμα πληκτρολογίου μέχρι να πατηθεί το 2ο πλήκτρο
+		cpi r21, 0x01	;Έλεγχος flag ορθότητας 1ου ψηφίου
+		breq wrong_pass	;Αν είναι 1 πηγαίνουμε στο λάθος password 
+		cpi r24, '8'	;Έλεγχος 2ου ψηφίου
+		brne wrong_pass	;Αν δεν είναι σωστό πηγαίνουμε στο λάθος password 
 		
-correct_pass:
+correct_pass:			;Εάν φτάσουμε εδώ έχουμε σωστό password
 		rcall scan_keypad_rising_edge_sim
-		welcome
+		welcome		;Κλήση macro welcome
 		rjmp digit_1
 
-wrong_pass:
+wrong_pass:			;Εάν φτάσουμε εδώ έχουμε λάθος  password
 		rcall scan_keypad_rising_edge_sim
-		alarm
+		alarm		;Κλήση macro alarm
 		rjmp digit_1
 
 scan_row_sim:			;Υλοποίηση ρουτίνας scan_row_sim
