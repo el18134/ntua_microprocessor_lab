@@ -2,6 +2,7 @@
 _tmp_: .byte 2
 
 .CSEG
+.include "m16def.inc"
 
 .macro welcome
 		rcall lcd_init_sim
@@ -94,8 +95,7 @@ blink2:
 .org 0x00
 rjmp reset
 
-reset:	
-		rcall scan_keypad_rising_edge_sim	
+reset:		
 		ldi	r18, LOW(RAMEND)	
 		out	spl, r18
 		ldi	r18, HIGH(RAMEND)
