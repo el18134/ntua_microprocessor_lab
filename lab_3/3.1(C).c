@@ -4,11 +4,11 @@
 
 char reg[2], mem[2], fd, sd;
 
-char swap(char x) {	//Υλοποίηση εντολής swap
+char swap(char x) { //Υλοποίηση εντολής swap
 	return ((x & 0x0F) << 4 | (x & 0xF0) >>4);
 }
 
-char scan_row(int r) {	//Υλοποίηση ρουτίνας scan_row_sim
+char scan_row(int r) { //Υλοποίηση ρουτίνας scan_row_sim
 	char o = 0x08;
 	o = (o << r);	//Ολίσθηση r φορές του o = 00001000
 	PORTC = o;	//Θέτουμε την γραμμή που σκανάρουμε σε 1
@@ -16,7 +16,7 @@ char scan_row(int r) {	//Υλοποίηση ρουτίνας scan_row_sim
 	return PINC & 0x0F; //Επιστροφή τεσσάρων  LSB της PORTC (στήλες πληκτρολογίου)
 }
 
-void scan_keypad() {	//Υλοποίηση ρουτίνας scan_keypad_sim
+void scan_keypad() { //Υλοποίηση ρουτίνας scan_keypad_sim
 	char c;
 			
 	c = scan_row(1); //Σκανάρισμα πρώτης σειράς
@@ -59,9 +59,9 @@ int scan_keypad_rising_edge() {	//Υλοποίηση ρουτίνας scan_row_r
 	return (reg[0] || reg[1]); //Επιστροφή των διακοπτών που μόλλις πατήθηκαν (0 αν δεν έχει πατηθεί πλήκτρο)
 }
 
-char keypad_to_ascii() {	//Υλοποίηση ρουτίνας keypad_to_ascii_sim
-	if ((reg[0]&0x01) == 0x01) //Εύρεση πατημένου πλήκτρου και επιστροφή του κωδικού ASCII του
-	return '*';
+char keypad_to_ascii() { //Υλοποίηση ρουτίνας keypad_to_ascii_sim
+	if ((reg[0]&0x01) == 0x01) 
+	return '*';	//Εύρεση πατημένου πλήκτρου και επιστροφή του κωδικού ASCII που του αντιστοιχεί
 	
 	if ((reg[0]&0x02) == 0x02)
 	return '0';
