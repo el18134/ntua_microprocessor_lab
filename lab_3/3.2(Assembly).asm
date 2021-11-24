@@ -4,9 +4,9 @@ _tmp_: .byte 2
 .CSEG
 .include "m16def.inc"
 
-.macro welcome
+.macro welcome			;Macro welcome που ανάβει τα led για 4sec(σωστός κωδικός)
 		rcall lcd_init_sim
-		ldi r24,'W'
+		ldi r24,'W'	;Εμφάνιση μυνήματος WELCOME 48 στην οθόνη LCD
 		rcall lcd_data_sim 
 		ldi r24,'E'
 		rcall lcd_data_sim
@@ -27,24 +27,24 @@ _tmp_: .byte 2
 		ldi r24,'8'
 		rcall lcd_data_sim
 
-		ldi r19, 0xA0
+		ldi r19, 0xA0	;160 επαναλήψεις διάρκειας 25ms: συνολική καθυστέρηση 4sec
 keep_on:
 		ser r18
-		out PORTB,r18
-		rcall scan_keypad_rising_edge_sim
+		out PORTB,r18	;Ανάβουμε τα led της PORTB
+		rcall scan_keypad_rising_edge_sim ;Διάβασμα πληκτρολογίου κατά την διάρκεια ανάμματος των led (19ms)
 		ldi r24,low(6)
 		ldi r25,high(6)
-		rcall wait_msec
+		rcall wait_msec	;Πρόσθετη καθυστέρηση 6ms ώστε να έχουμε συνολική καθυστέρηση 25ms
 		dec r19
 		cpi r19, 0x00
 		brne keep_on
 		clr r18
-		out PORTB,r18		
+		out PORTB,r18	;Σβήνουμε τα  led της PORTB	
 .endmacro
 		
-.macro alarm
+.macro alarm			;Macro alarm που αναβοσβήνει τα led για 4sec(λάθος κωδικός)
 		rcall lcd_init_sim
-		ldi r24,'A'
+		ldi r24,'A'	;Εμφάνιση μυνήματος ALARM ON στην οθόνη LCD
 		rcall lcd_data_sim
 		ldi r24,'L'
 		rcall lcd_data_sim
@@ -61,28 +61,28 @@ keep_on:
 		ldi r24,'N'
 		rcall lcd_data_sim
 
-		ldi r20, 0x04
+		ldi r20, 0x04	;4 επαναλήψεις διάρκειας 1sec: συνολική καθυστέρηση 4sec
 blink:
-		ldi r19, 0x14
+		ldi r19, 0x14	;20 επαναλήψεις διάρκειας 25ms: συνολική καθυστέρηση 0.5sec
 blink1:
-		ser r18
-		out PORTB,r18
-		rcall scan_keypad_rising_edge_sim
+		ser r18		;Ανάβουμε τα led της PORTB
+		out PORTB,r18	;Διάβασμα πληκτρολογίου κατά την διάρκεια που αναβοσβήνουν τα led (19ms)
+		rcall scan_keypad_rising_edge_sim 
 		ldi r24,low(6)
 		ldi r25,high(6)
-		rcall wait_msec
+		rcall wait_msec	;Πρόσθετη καθυστέρηση 6ms ώστε να έχουμε συνολική καθυστέρηση 25ms
 		dec r19
 		cpi r19, 0x00
 		brne blink1
 
-		ldi r19, 0x14
+		ldi r19, 0x14	;20 επαναλήψεις διάρκειας 25ms: συνολική καθυστέρηση 0.5sec
 blink2:
-		clr r18
-		out PORTB,r18
+		clr r18		;Σβήνουμε τα  led της PORTB
+		out PORTB,r18	;Διάβασμα πληκτρολογίου κατά την διάρκεια που αναβοσβήνουν τα led (19ms)
 		rcall scan_keypad_rising_edge_sim
 		ldi r24,low(6)
 		ldi r25,high(6)
-		rcall wait_msec
+		rcall wait_msec	;Πρόσθετη καθυστέρηση 6ms ώστε να έχουμε συνολική καθυστέρηση 25ms
 		dec r19
 		cpi r19, 0x00
 		brne blink2
@@ -137,7 +137,7 @@ wrong_pass:
 		alarm
 		rjmp digit_1
 
-scan_row_sim:
+scan_row_sim:			;Υλοποίηση ρουτίνας scan_row_sim
 		out PORTC, r25 
 		push r24 
 		push r25 
@@ -152,7 +152,7 @@ scan_row_sim:
 		andi r24 ,0x0f 
 		ret
 
-scan_keypad_sim:
+scan_keypad_sim:		;Υλοποίηση ρουτίνας scan_keypad_sim
 		push r26	
 		push r27	
 		ldi r25 , 0x10	
@@ -176,7 +176,7 @@ scan_keypad_sim:
 		pop r26
 		ret 
 
-scan_keypad_rising_edge_sim:
+scan_keypad_rising_edge_sim:	;Υλοποίηση ρουτίνας scan_row_rising_edge_sim
 		push r22	
 		push r23	
 		push r26
@@ -208,7 +208,7 @@ scan_keypad_rising_edge_sim:
 		pop r22
 		ret
 
-keypad_to_ascii_sim:
+keypad_to_ascii_sim:		;Υλοποίηση ρουτίνας keypad_to_ascii_sim
 		push r26	
 		push r27	
 		movw r26 ,r24	
@@ -262,12 +262,12 @@ keypad_to_ascii_sim:
 		rjmp return_ascii
 		clr r24
 		rjmp return_ascii
-return_ascii:
+return_ascii:			
 		pop r27		
 		pop r26
 		ret 
 
-write_2_nibbles_sim:
+write_2_nibbles_sim:		;Υλοποίηση ρουτίνας write_2_nibbles_sim
 		push r24	
 		push r25	
 		ldi r24 ,low(6000) 
@@ -299,7 +299,7 @@ write_2_nibbles_sim:
 		cbi PORTD, PD3
 		ret
 
-lcd_data_sim:
+lcd_data_sim:			;Υλοποίηση ρουτίνας lcd_data_sim
 		push r24	
 		push r25	
 		sbi PORTD, PD2	
@@ -311,7 +311,7 @@ lcd_data_sim:
 		pop r24
 		ret 
 
-lcd_command_sim:
+lcd_command_sim:		;Υλοποίηση ρουτίνας lcd_comand_sim
 		push r24	
 		push r25	
 		cbi PORTD, PD2	
@@ -323,7 +323,7 @@ lcd_command_sim:
 		pop r24
 		ret 
 
-lcd_init_sim:
+lcd_init_sim:			;Υλοποίηση ρουτίνας lcd_init_sim
 		push r24	
 		push r25	
 
@@ -387,7 +387,7 @@ lcd_init_sim:
 		pop r24
 		ret
 
-wait_msec:
+wait_msec:			;Υλοποίηση ρουτίνας wait_msec
 		push r24				
 		push r25				
 		ldi r24 , low(998)		
@@ -399,7 +399,7 @@ wait_msec:
 		brne wait_msec			
 		ret
 
-wait_usec:
+wait_usec:			;Υλοποίηση ρουτίνας wait_usec
 		sbiw r24 ,1			
 		nop					
 		nop				
