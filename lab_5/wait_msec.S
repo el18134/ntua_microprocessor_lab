@@ -4,7 +4,7 @@
 
 .global wait_msec
 
-wait_msec:			;Υλοποίηση ρουτίνας wait_msec
+wait_msec:			;Γ•Γ«Γ―Γ°Γ―ΓΓ§Γ³Γ§ Γ±Γ―ΓµΓ΄ΓΓ­Γ΅Γ² wait_msec
 		push r24				
 		push r25				
 		ldi r24 , lo8(998)		
