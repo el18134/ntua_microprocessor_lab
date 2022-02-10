@@ -4,7 +4,7 @@
 
 .global lcd_command_sim
 
-lcd_command_sim:		;Υλοποίηση ρουτίνας lcd_comand_sim
+lcd_command_sim:		;Γ•Γ«Γ―Γ°Γ―ΓΓ§Γ³Γ§ Γ±Γ―ΓµΓ΄ΓΓ­Γ΅Γ² lcd_comand_sim
 		push r24	
 		push r25	
 		cbi PORTD, PD2	
