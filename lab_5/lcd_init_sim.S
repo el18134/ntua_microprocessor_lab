@@ -4,7 +4,7 @@
 
 .global lcd_init_sim
 
-lcd_init_sim:			;Υλοποίηση ρουτίνας lcd_init_sim
+lcd_init_sim:			;Γ•Γ«Γ―Γ°Γ―ΓΓ§Γ³Γ§ Γ±Γ―ΓµΓ΄ΓΓ­Γ΅Γ² lcd_init_sim
 		push r24	
 		push r25	
 
