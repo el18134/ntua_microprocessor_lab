@@ -4,7 +4,7 @@
 
 .global write_2_nibbles_sim
 
-write_2_nibbles_sim:		;Υλοποίηση ρουτίνας write_2_nibbles_sim
+write_2_nibbles_sim:		;Γ•Γ«Γ―Γ°Γ―ΓΓ§Γ³Γ§ Γ±Γ―ΓµΓ΄ΓΓ­Γ΅Γ² write_2_nibbles_sim
 		push r24	
 		push r25	
 		ldi r24 ,lo8(6000) 
