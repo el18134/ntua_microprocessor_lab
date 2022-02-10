@@ -4,7 +4,7 @@
 
 .global wait_usec
 
-wait_usec:			;Υλοποίηση ρουτίνας wait_usec
+wait_usec:			;Γ•Γ«Γ―Γ°Γ―ΓΓ§Γ³Γ§ Γ±Γ―ΓµΓ΄ΓΓ­Γ΅Γ² wait_usec
 		sbiw r24 ,1			
 		nop					
 		nop				
