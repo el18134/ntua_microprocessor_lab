@@ -10,7 +10,7 @@ Assembly and C programs for ATmega16 AVR microcontroller.
 ### Lab 3
 Assembly and C programs for ATmega16 AVR microcontroller.
 
-### Lab 4
+### [Lab 4](https://github.com/el18134/ntua_microprocessor_lab/tree/main/lab_4)
 Assembly and C programs for ATmega16 AVR microcontroller.
 
 ### Lab 5
