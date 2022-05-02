@@ -1,4 +1,4 @@
-# ECE NTUA Microprocessor Lab
+# ECE NTUA 3213 Microprocessor Lab
 Assembly and C programming for Intel 8085 microprocessor and ATmega16 AVR microcontroller.
 
 ## Lab 1
